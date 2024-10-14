@@ -31,7 +31,7 @@ const Dashboard = () => {
         );
         setSectionData(response.data.data);
       } catch (err) {
-        // console.log(err);
+        // Handel this error Silently
       } finally {
         setLoading(false);
       }
@@ -55,7 +55,7 @@ const Dashboard = () => {
     setIsEditModalOpen(true);
     editForm.setFieldsValue({
       section: category.section,
-      active: category.active ? "Yes" : "No",
+      active: category.active ? "yes" : "no",
     });
   };
 
@@ -111,7 +111,7 @@ const Dashboard = () => {
       const response = await axios.get(
         "http://localhost:8000/api/admin/getalltypes"
       );
-      setSectionData(response.data.data);
+      setSectionData(response?.data?.data);
     } catch (err) {
       console.log(err);
       message.error("An error occurred while deleting the section");
@@ -138,14 +138,14 @@ const Dashboard = () => {
   // Checking is Admin or Not
 
 
-  let isRole =  localStorage.getItem('role') == 'super-admin' ? true : false
+  let isRole = localStorage?.getItem('role') == 'super-admin' ? true : false
 
   return (
     <div className="p-6">
       <div className="flex justify-between">
         <div>
           <h1 className="mb-4 text-2xl font-bold">
-            Welcome to the  {localStorage.getItem('role') || 'Control'} Panel
+            Welcome to the  {localStorage?.getItem('role') || 'Control'} Panel
           </h1>
           <p className="mb-8">
             Manage all your Charter related details and view
@@ -170,13 +170,13 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="flex flex-wrap gap-4 m-2">
-          {sectionData.map((category) => (
+          {sectionData?.map((category) => (
             <div
               className="border shadow-md w-[26rem] h-[7rem] p-4 flex-col gap-4"
-              key={category._id}
+              key={category?._id}
             >
               <div className="flex justify-between">
-                <h1>{category.section}</h1>
+                <h1>{category?.section}</h1>
                 <Dropdown
                   overlay={
                     <Menu onClick={({ key }) => handleMenuClick(key, category)}>
@@ -193,7 +193,7 @@ const Dashboard = () => {
                 <Button
                   type="primary"
                   className="mt-4 bg-blue-800"
-                  onClick={() => handleCategory(category.section)}
+                  onClick={() => handleCategory(category?.section)}
                 >
                   Explore more
                 </Button>
